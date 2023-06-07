@@ -9,17 +9,17 @@ from app.blueprints.api.helpers import token_required
 
 
 
-@bp.route('/about')
-def about():
-    return render_template('about.jinja')
+@bp.route('/char_page')
+def char_page():
+    return render_template('char_page.jinja')
 
-@bp.route('/about', methods=["GET", "POST"])
+@bp.route('/char_page', methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         char_name = request.form["search_char"]
         Marvel_Char(char_name)
     else:
-        return render_template("/about")
+        return render_template("/char_page")
 
 class Marvel_Char():
     def __init__(self,char_name):
@@ -63,16 +63,16 @@ class Marvel_Char():
 ##      print({"name": name, "description": description, "thumbnail": thumbnail})
 ##      return {"name": name, "description": description, "thumbnail": thumbnail}
 ##   except IndexError:
-##      return render_template("/about")
+##      return render_template("/char_page")
    
-##@bp.route('/about', methods=["GET", "POST"])
+##@bp.route('/char_page', methods=["GET", "POST"])
 ##def index():
 ##    if request.method == "POST":
 ##        name = request.form["search"]
 ##        data = get_character(os.environ.get('PUBLIC_KEY'),os.environ.get('PRIVATE_KEY'), name)
-##        return render_template("/about", data=data)
+##        return render_template("/char_page", data=data)
     
-##    return render_template("/about")
+##    return render_template("/char_page")
 
 
 def on_sale():

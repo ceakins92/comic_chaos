@@ -12,21 +12,62 @@
 <main>
     <div id="main">
         <article class="main-articles">
+
+            <br>
+            <br>
+            <br>
+            <center>
+                <h3>B r o w s e</h3><br>
+                Today's Random Selection of Comics:<br><br>
+            </center>
+            <center>
+                <table class="sale-table">
+                    <thead>
+                        <tr>
+                            <th id="th-cover">Cover</th>
+                            <th id="th-publisher">Publisher</th>
+                            <th id="th-issue">Issue</th>
+                        </tr>
+                        {% for issues in issues %}
+                        <tr>
+                            <th>{{ issues['Covers'] }}</th>
+                            <th>{{ issues['Publisher'] }}</th>
+                            <th>{{ issues['Issue'] }}</th>
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                </table>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </center>
+
+            <br /><br />
+            <hr>
+            <br /><br />
             <center>
                 <br>
-                <h4>c o m m i s s i o n &nbsp&nbspa r t</h4><br>
+                <h4>C o m m i s s i o n &nbsp&nbspC u s t o m &nbsp&nbspA r t</h4><br>
                 <small>Commission original artwork from professionals</strong><br><br>
 
             </center>
             <figure>
                 <center><img src="{{url_for('static', filename='/img/deadpool.jpg')}}" align="middle" width="800px" />
                 </center>
-            </figure>
-            <p>Interested in commisioning a custom hero or villian art piece? You've come to the right place!<br>
-                <br>
-                Complete and submit the form below, and we'll connect you with a highly skilled artist that can
-                professionally produce original art just for you!
-            </p>
+            </figure><br /><br />
+            <p>
+                <center>
+                    <h6>Interested in commisioning a custom hero or villian art piece? Maybe your own comic?? You've
+                        come to the right
+                        place!</h6><br>
+                    <br>
+                    Complete and submit the form below, and we'll connect you with a highly skilled artist<br /> that
+                    can
+                    professionally produce original art or comics just for you!
+                </center>
+            </p><br />
             <center>
                 <font style="color: rgb(226, 214, 161)">
                     <form class="contact" action="{{ url_for('auth.get_commission') }}" method=post>
