@@ -1,0 +1,11 @@
+<form action="{{ url_for('social.user_search') }}" method="post">
+    {{ g.user_search_form.hidden_tag() }}
+    <font style="color: rgb(226, 214, 161)">
+        {{ g.user_search_form.user(size=20) }}
+        {% for error in g.user_search_form.user.errors %}
+        <span class="err-msg">{{ error }}</span>
+        {% endfor %}
+
+        {{ g.user_search_form.submit() }}
+    </font>
+</form>
