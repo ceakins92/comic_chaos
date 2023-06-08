@@ -21,23 +21,22 @@
             </center>
 
             <center>
-                <form class="row g-3">
-                    <center>
-                        <div class="col-auto">
-                            <label for="search_char" class="visually-hidden">Search Characters</label>
-                            <input type="text" class="form-control" id="search_char"
-                                placeholder="Example: deadpool"><br />
-                            <button type="submit" class="btn btn-primary mb-3">Search</button>
-                        </div>
-                    </center>
+                <form method="POST" action="{{ url_for('api.char_page')}}">
+                    <label for="search_char">Search for a character</label>
+                    <input type="text" id="search_char" name="search_char" required>
+                    <button type="submit">Search</button>
                 </form>
                 <br /><br />
             </center>
             {% if data %}
             <div class="row">
                 <div class="col text-center">
-                    <h2>{{ Marvel_Char.name }}</h2>
-                    <img src="{{ Marvel_Char.image }}" class="img-fluid">
+                    <h2>{{ data['name'] }}</h2>
+                    <img src="{{ data['thumbnail'] }}" alt="{{ data['name']}}" width="400px" class="img-fluid">
+                    <p>{{ data['description']}}</p>
+                    <p>{{ data['comics_avail'] }}</p>
+                    <p>{{ data['comic_resource'] }}</p>
+
                 </div>
             </div>
             {% else %}
