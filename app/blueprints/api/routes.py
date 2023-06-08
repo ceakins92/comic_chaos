@@ -61,7 +61,7 @@ def get_marvel_character(name):
             desc_title = f'<font color="white">Description:</font> {description}'
             comic_num = f'<font color="white">Comics Appeared In:</font> {comics_avail}'
             comic_res = f'<font color="white">{char_name} Comic Collection via</font><font color="red"> MARVEL</font><font color="white">:</font><br/><a href="{comic_resource}" target="_blank">{comic_resource}</a>'
-            thumbnail = f"{thumbnail}/landscape_incredible.{extension}"
+            thumbnail = f"{thumbnail}.{extension}"
         # - Return Data=============
             return {"Character Name": name_title, "Description (if available)": desc_title, "Comics Appeared In": comic_num, "Comic Collection via Marvel": comic_res,"thumbnail": thumbnail}
     # - Error handling========
@@ -164,7 +164,7 @@ def get_post(user,post_id):
     except: 
       return jsonify([{'message':'Invalid Post Id'}]), 404
     
-    
+
 # - Post Creation ======================================================
 
 @bp.post('/post')

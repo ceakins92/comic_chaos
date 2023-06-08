@@ -22,8 +22,13 @@
                 </h2>
                 <br>
                 <h3>P o s t s, &nbsp&nbspC o m m u n i t y, &nbsp&nbspF a v o r i t e s</h3><br>
-                <br><br>
+                <br>
             </center>
+            Your information:<br />
+            {{ current_user.first_name.title() }} {{ current_user.last_name.title() }}<br>
+            Email: {{ current_user.email }}<br>
+            Date Joined: {{ current_user.date_joined }}<br>
+
             <center>
                 <hr>
                 <h5>
