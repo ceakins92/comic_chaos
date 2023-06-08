@@ -3,8 +3,8 @@ from pendulum import time
 import requests
 
 def get_marvel_character(name):
-    public_key = '105d96a57df71042ffdfc572b7195cf5'
-    private_key = 'e917c38970ddb27117e675af6518098d573d06c4'
+    public_key = ''
+    private_key = ''
     ts = str(time.time())
     hash = hashlib.md5()
     hash.update(ts.encode('utf-8'))
