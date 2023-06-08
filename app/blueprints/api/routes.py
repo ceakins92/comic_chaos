@@ -1,6 +1,7 @@
 # - IMPORT MODULES =======================================================
 
 from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
+from flask_login import login_required
 import requests
 import hashlib
 import pendulum
@@ -14,10 +15,12 @@ from app.blueprints.api.helpers import token_required
 # - ROUTE FOR char_page ===================================================
 
 @bp.route('/char_page')
+@login_required
 def char_page():
     return render_template('char_page.jinja')
 
 # - Character search API ==================================================
+
 
 def get_marvel_character(name):
     print(name)
@@ -70,8 +73,10 @@ def get_marvel_character(name):
         flash(f"Error, Please Try Again.", "warning")
 
 # User input and error handling ========================================
+
    
 @bp.route('/char_page', methods=['GET','POST'])
+@login_required
 def char_page_post():
     if request.method == 'POST':
         name = request.form.get('search_char')
