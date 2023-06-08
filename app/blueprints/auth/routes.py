@@ -1,14 +1,25 @@
 from flask import Flask, render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required
 from flask import request
-from app.forms import CommissionForm, ContactForm
-from app.models import User, Commission
+from app.forms import ContactForm
+from app.models import User
 from flask_login import current_user
 import pandas as pd
-
+import hashlib
+import pendulum
+import requests
+import time
+import os
 from . import bp
 from app.forms import RegisterForm
 from app.forms import SigninForm
+
+
+# - ROUTE FOR COMIC SEARCH PAGE ===========================================
+@bp.route('/comic_search')
+@login_required
+def comic_search_page():
+    return render_template('comic_search.jinja')
 
 @bp.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -54,19 +65,6 @@ def register():
             flash(f'{form.email.data} is already taken, please try again', 'warning')
     return render_template('register.jinja', form=form)
 
-@bp.route('/commission', methods=["GET","POST"])
-@login_required
-def get_commission():
-    form = CommissionForm()
-    if form.validate_on_submit():
-        c = Commission(name=form.name.data,email=form.email.data,subject=form.subject.data,request=form.message.data,budget=form.budget.data)
-        c.user_id = current_user.user_id
-        c.commit()
-        flash('Request Sent!', 'success')
-        return redirect(url_for('social.user_page', username=current_user.username))
-    else:
-        return render_template('commission.jinja', form=form)
-
 @bp.route('/contactus', methods=["GET", "POST"])
 def get_contact():
     form = ContactForm()
@@ -81,3 +79,73 @@ def get_contact():
         return redirect(url_for('social.user_page', username=current_user.username))
     else:
         return render_template('contact.jinja', form=form)
+
+
+
+# GET MARVEL COMIC API ==========================================
+
+def get_marvel_comic(title):
+    # Get public_key from environment variables =================
+    public_key = os.environ.get('PUBLIC_KEY')
+    # Get timestamp for Marvel API Call =============================
+    ts = pendulum.now('UTC')
+    ts = ts.to_iso8601_string()
+    # Create Hash for Marvel API Call =============================
+    hash = hashlib.md5()
+    hash.update(ts.encode('utf-8'))
+    hash.update(os.environ.get('PRIVATE_KEY').encode('utf-8'))
+    hash.update(os.environ.get('PUBLIC_KEY').encode('utf-8'))
+    # Set Params for Marvel API Call =============================
+    params = {
+        'apikey': public_key,
+        'ts': ts,
+        'hash': hash.hexdigest(),
+        'title': title
+    }
+    # API Call ===============================================================
+    response = requests.get(
+        'https://gateway.marvel.com:443/v1/public/comics', params=params)
+    if response.status_code == 200:
+        print(response.json())
+        data = response.json()
+        try:
+            # Create Variables from JSON data ===============================
+            title_name = data["data"]["results"][0]["title"]
+            description = data["data"]["results"][0]["description"]
+            on_sale = data["data"]["results"][0]["dates"][0]["date"]
+            comic_resource = data["data"]["results"][0]["urls"][0]["url"]
+            thumbnail = data["data"]["results"][0]["thumbnail"]["path"]
+            extension = data["data"]["results"][0]["thumbnail"]["extension"]
+            thumbnail = f"{thumbnail}.{extension}"
+            print({"title": title_name, "Description": description, "First Available": on_sale,
+                  "View at Marvel": comic_resource, "thumbnail": thumbnail})
+            # FORMAT VARIABLES FOR RENDERING ============================
+            dis_title = f'<strong>{title_name}</strong>'
+            dis_desc = f'<font color="white">Description:</font> {description}'
+            dis_date = f'<font color="white">Available Date:</font> {on_sale}'
+            dis_link = f'<font color="white">{title_name} Comic Collection via</font><font color="red"> MARVEL</font><font color="white">:</font><br/><a href="{comic_resource}" target="_blank">{comic_resource}</a>'
+            thumbnail = f"{thumbnail}"
+            # Return Formatted Variables ============================
+            return {"title": dis_title, "Description": dis_desc, "First Available": dis_date, "View at Marvel": dis_link, "thumbnail": thumbnail}
+        # Error Handling =================================================
+        except:
+            return None
+    else:
+        flash(
+            f'Error {response.status_code}: {response.text}. Please try again.', 'warning')
+
+@bp.route('/comic_search', methods=['GET','POST'])
+@login_required
+def title_page_post():
+    if request.method == 'POST':
+        title = request.form.get('search_title')
+        if not title:
+            flash(f"Error, Please Enter a Comic Title.", "warning")
+        data = get_marvel_comic(title)
+        if data:
+            return render_template('comic_search.jinja', data=data)
+        if data == None:
+            flash(f'Invalid Comic or Comic Not Found.', "warning")
+            return render_template('comic_search.jinja')
+    else:
+        return render_template('comic_search.jinja')

@@ -21,7 +21,6 @@ def char_page():
 
 # - Character search API ==================================================
 
-
 def get_marvel_character(name):
     print(name)
     # - Get Public Key from env ==
@@ -70,11 +69,11 @@ def get_marvel_character(name):
             return None
     # - Error handling for API Response====
     else:
-        flash(f"Error, Please Try Again.", "warning")
+        flash(f'Error {response.status_code}: {response.text}. Please try again.', 'warning')
+
 
 # User input and error handling ========================================
 
-   
 @bp.route('/char_page', methods=['GET','POST'])
 @login_required
 def char_page_post():
@@ -92,7 +91,7 @@ def char_page_post():
         return render_template('char_page.jinja')
 
 
-
+# On Sale Function/API, Not Implemented =============================
 def on_sale():
    url = "https://www.comics.org/on_sale_weekly/?_export=json"
    response = urllib.request.urlopen(url)
@@ -106,7 +105,7 @@ def on_sale():
         return render_template('marketplace.jinja', cover=issues["Covers"], publisher=issues["Publisher"], issue=issues["Issue"], sale_date=issues["On-sale Date"])
       
 
-# - Output user posts API ===============================================
+# - Output user posts local API ===============================================
 
 @bp.get('/posts')
 @token_required
@@ -126,7 +125,7 @@ def api_posts(user):
             })
     return jsonify(result), 200
 
-# - Posts by Username =================================================
+# - Posts by Username local =================================================
 
 @bp.get('/posts/<username>')
 @token_required
@@ -145,7 +144,7 @@ def user_posts(user,username):
               } for post in user.posts]), 200
     return jsonify([{'message':'Invalid Username'}]), 404 
 
-# - Posts by ID ======================================================
+# - Posts by ID local ======================================================
 
 @bp.get('/post/<id>')
 @token_required
@@ -164,6 +163,7 @@ def get_post(user,post_id):
                 }])
     except: 
       return jsonify([{'message':'Invalid Post Id'}]), 404
+    
     
 # - Post Creation ======================================================
 

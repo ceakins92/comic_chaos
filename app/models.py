@@ -56,20 +56,3 @@ class Post(db.Model):
     def commit(self):
         db.session.add(self)
         db.session.commit()
-
-class Commission(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250))
-    email = db.Column(db.String(50))
-    subject = db.Column(db.String(50))
-    request = db.Column(db.String(250))
-    budget = db.Column(db.Integer)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-
-    def __repr__(self):
-        return f'Post {self.body}'
-    
-    def commit(self):
-        db.session.add(self)
-        db.session.commit()

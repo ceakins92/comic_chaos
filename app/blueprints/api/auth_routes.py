@@ -1,8 +1,9 @@
+# Imports =======================================================
 from flask import request, jsonify
-
 from . import bp
 from app.models import User
 
+# Verify User Function ===================================================
 @bp.post('/verifyuser')
 def verify_user():
   content = request.json
@@ -14,6 +15,7 @@ def verify_user():
     return jsonify([{'user token': user.token}])
   return jsonify([{'message':'Invalid User Information'}]) 
 
+# Register User Function ===================================================
 @bp.post('/register-user')
 def register_user():
   content = request.json

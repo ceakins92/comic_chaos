@@ -17,79 +17,68 @@
             <br>
             <br>
             <center>
-                <h3>B r o w s e</h3><br>
-                Today's Random Selection of Comics:<br><br>
+                <h3>S e a r c h &nbsp&nbspN e w &nbsp&nbspC o m i c s</h3><br><br><br>
             </center>
+            <!-- Search Comics -->
+
             <center>
-                <table class="sale-table">
-                    <thead>
-                        <tr>
-                            <th id="th-cover">Cover</th>
-                            <th id="th-publisher">Publisher</th>
-                            <th id="th-issue">Issue</th>
-                        </tr>
-                        {% for issues in issues %}
-                        <tr>
-                            <th>{{ issues['Covers'] }}</th>
-                            <th>{{ issues['Publisher'] }}</th>
-                            <th>{{ issues['Issue'] }}</th>
-                        </tr>
-                        {% endfor %}
-                    </thead>
-                </table>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <form method="POST" action="{{ url_for('auth.title_page_post')}}">
+                    <label for="search_char">Search by Comic Title</label>
+                    <input type="text" id="search_title" placeholder="Comic Title" name="search_title" required>
+                    <button type="submit">Search</button>
+                </form>
+                <br /><br />
+            </center>
+
+            <!-- Comics Info -->
+
+            {% if data %}
+
+            <div class="row">
+                <div class="col text-center">
+                    <center>
+                        <hr>
+                        <font style="color:yellow">Newest Comic Located!</font><br><br>
+                        <h2>{{ data['title'] }}</h2>
+                        <img src="{{ data['thumbnail'] }}" width="500px" class="img-fluid"><br><br>
+                    </center>
+                    <p>{{ data['Description'] }}</p><br>
+                    <hr>
+                    <p>{{ data['First Available'] }}</p>
+                    <p>{{ data['View at Marvel'] }}</p>
+                    <hr>
+                    <p><button class="btn btn-outline-warning">Add to Favorites</button> </p>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <!-- No Character Found -->
+
+            <div class="row">
+                <br /><br />
+                <hr>
+                <br />
+                <figure>
+                    <center><img src="{{url_for('static', filename='/img/search.jpg')}}" align="middle" width="400px" />
+                    </center>
+                </figure>
+                <div class="col text-center"></div>
+            </div>
+            {% endif %}
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             </center>
 
             <br /><br />
             <hr>
             <br /><br />
-            <center>
-                <br>
-                <h4>C o m m i s s i o n &nbsp&nbspC u s t o m &nbsp&nbspA r t</h4><br>
-                <small>Commission original artwork from professionals</strong><br><br>
 
-            </center>
-            <figure>
-                <center><img src="{{url_for('static', filename='/img/deadpool.jpg')}}" align="middle" width="800px" />
-                </center>
-            </figure><br /><br />
-            <p>
-                <center>
-                    <h6>Interested in commisioning a custom hero or villian art piece? Maybe your own comic?? You've
-                        come to the right
-                        place!</h6><br>
-                    <br>
-                    Complete and submit the form below, and we'll connect you with a highly skilled artist<br /> that
-                    can
-                    professionally produce original art or comics just for you!
-                </center>
-            </p><br />
-            <center>
-                <font style="color: rgb(226, 214, 161)">
-                    <form class="contact" action="{{ url_for('auth.get_commission') }}" method=post>
-
-                        {{ form.hidden_tag()}}
-                        <p>
-                            {{ form.name.label }}<br>
-                            {{ form.name(placeholder='Full Name') }}<br>
-                            {{ form.email.label }}<br>
-                            {{ form.email(placeholder='Your Email ...') }}<br>
-                            {{ form.subject.label }}<br>
-                            {{form.subject(placeholder='Subject ...')}}<br>
-                            {{ form.message.label }}<br>
-                            {{ form.message(placeholder='Describe your Request ...') }}<br>
-                            {{ form.budget.label }}<br>
-                            {{ form.budget(placeholder='Your Budget ...') }}<br><br>
-                            {{ form.submit() }}
-                        </p>
-
-                    </form>
-                </font>
-            </center>
         </article>
     </div>
 

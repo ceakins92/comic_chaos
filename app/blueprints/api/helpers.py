@@ -2,6 +2,7 @@ from flask import request,jsonify
 from functools import wraps
 from app.models import User
 
+# Token Required Function ===================================================
 def token_required(flask_route):
     @wraps(flask_route)
     def wrapper(*args,**kwargs):
