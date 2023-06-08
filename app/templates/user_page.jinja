@@ -21,18 +21,20 @@
                     <font style="color:crimson">Chaos Page</font>
                 </h2>
                 <br>
-                <h3>P o s t s</h3><br>
+                <h3>P o s t s, &nbsp&nbspC o m m u n i t y, &nbsp&nbspF a v o r i t e s</h3><br>
                 <br><br>
             </center>
             <center>
+                <hr>
+                <h5>
+                    <font style: color="white">{{ current_user.username.title() }}'s Posts:</font>
+                </h5>
                 <font style="color:rgb(226, 214, 161)">
                     {% for post in user.posts %}
                     <h6 style="color: rgb(226, 214, 161)">
                         <hr>
                         <p>
-                        <h5>
-                            <font style: color="white">{{ current_user.username.title() }}'s Posts:</font>
-                        </h5>
+
                         <h6 style="color: white">{{ post.char_name }}</h6><br>
                         Subject: <h6 style="color: white">{{ post.subject }}</h6><br>
                         Post: <h6 style="color: white">{{ post.body }}</h6><br>
@@ -53,9 +55,34 @@
             <br>
             <br>
             <br>
+            <center>
+                <hr>
+                <h5>
+                    <font style: color="white">{{ current_user.username.title() }}'s Friends:</font>
+                </h5>
 
+                <hr>
+                <br />
+                <font style="color:rgb(226, 214, 161)">Nothing to see here. Much Sad.</font>
 
+            </center>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <center>
+                <hr>
+                <h5>
+                    <font style: color="white">{{ current_user.username.title() }}'s Favorites:</font>
+                </h5>
 
+                <hr>
+                <br />
+                <font style="color:rgb(226, 214, 161)">Nothing to see here. Such Empty.</font>
+                <br />
+                <br />
+            </center>
         </article>
     </div>
 
@@ -81,7 +108,7 @@
             </font><br>
             <hr><br>
             <figure>
-                <center><img src="{{url_for('static', filename='/img/ironman.jpg')}}" align="middle" width="400px" />
+                <center><img src="{{url_for('static', filename='/img/jumpin.jpg')}}" align="middle" width="450px" />
                 </center>
             </figure>
 

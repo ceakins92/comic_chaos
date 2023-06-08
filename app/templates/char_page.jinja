@@ -1,13 +1,16 @@
 {% extends "base.jinja" %}
-
 {% block content %}
-<div class="hero-image4">
+
+<!-- Hero Image -->
+
+<div class="hero-image3">
     <div class="hero-text"><img src="{{url_for('static', filename='/img/logo_transp_title.png')}}" width="400px">
 
         <h4>community | knowledge base | market</h4>
     </div>
 </div>
 
+<!-- Main Content -->
 
 <main>
     <div id="main">
@@ -20,6 +23,8 @@
 
             </center>
 
+            <!-- Search Character -->
+
             <center>
                 <form method="POST" action="{{ url_for('api.char_page')}}">
                     <label for="search_char">Search for a character</label>
@@ -28,34 +33,52 @@
                 </form>
                 <br /><br />
             </center>
+
+            <!-- Character Info -->
+
             {% if data %}
             <div class="row">
                 <div class="col text-center">
-                    <h2>{{ data['name'] }}</h2>
-                    <img src="{{ data['thumbnail'] }}" alt="{{ data['name']}}" width="400px" class="img-fluid">
-                    <p>{{ data['description']}}</p>
-                    <p>{{ data['comics_avail'] }}</p>
-                    <p>{{ data['comic_resource'] }}</p>
+                    <center>
+                        <hr>
+                        <font style="color:yellow">Character Located!</font><br><br>
+                        <h2>{{ data['Character Name'] }}</h2>
+                        <img src="{{ data['thumbnail'] }}" alt="{{ data['name']}}" width="500px"
+                            class="img-fluid"><br><br>
+                    </center>
+                    <p>{{ data['Description (if available)'] }}</p><br>
+                    <hr>
+                    <p>{{ data['Comics Appeared In'] }}</p>
+                    <p>{{ data['Comic Collection via Marvel'] }}</p>
+                    <hr>
+                    <p><button class="btn btn-outline-warning">Add to Favorites</button> </p>
 
                 </div>
+
             </div>
             {% else %}
+
+            <!-- No Character Found -->
+
             <div class="row">
+                <br /><br />
+                <hr>
+                <br />
+                <figure>
+                    <center><img src="{{url_for('static', filename='/img/search.jpg')}}" align="middle" width="400px" />
+                    </center>
+                </figure>
                 <div class="col text-center"></div>
             </div>
             {% endif %}
-            <figure>
-                <center><img src="{{url_for('static', filename='/img/marvelheader.jpg')}}" align="middle"
-                        width="800px" />
-                </center>
-            </figure>
+
 
     </div>
     <hr>
-
     </article>
     </div>
 
+    <!-- Sidebar with Registration or User Options -->
 
     <div id="side">
         <article class="side-articles" id="profiles">
