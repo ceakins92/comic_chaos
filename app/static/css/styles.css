@@ -322,9 +322,6 @@ footer hr {
 }
 
 @media screen and (max-width: 600px) {
-  .logo-text {
-    font-size: 10px;
-  }
   #article-image {
     width: 300px;
   }
