@@ -53,13 +53,24 @@
                             <span class="err-msg"> {{ error }} </span>
                             {% endfor %}
                         </p>
-                    </font>
-                    <p>
 
-                        {{ form.submit() }}
+                        <p>
 
-                    </p>
+                            {{ form.submit() }}
+
+                        </p>
                 </form>
+                <br>
+                <hr>
+                <br>
+                <center>
+                    Already a member?<br>
+                    <br>
+                    <a class="btn btn-outline-danger" href="{{ url_for('auth.signin') }}" id="splash-btn"
+                        role="button">Sign
+                        In</a>
+                </center>
+                </font>
                 <br>
                 <br>
                 <br>
