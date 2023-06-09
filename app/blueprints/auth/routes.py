@@ -36,6 +36,7 @@ def signin():
             flash(f"{form.username.data}/password not found", "warning")
     return render_template('signin.jinja', form=form)
 
+# LOGOUT ROUTE/FUNCTION =========================================
 @bp.route('/logout')
 @login_required
 def logout():
@@ -43,6 +44,7 @@ def logout():
     flash('Logged Out', 'success')
     return redirect(url_for('main.home'))
 
+# REGISTER ROUTE/FUNCTION =========================================
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -65,6 +67,8 @@ def register():
             flash(f'{form.email.data} is already taken, please try again', 'warning')
     return render_template('register.jinja', form=form)
 
+
+# CONTACT ROUTE/FUNCTION =========================================
 @bp.route('/contactus', methods=["GET", "POST"])
 def get_contact():
     form = ContactForm()
