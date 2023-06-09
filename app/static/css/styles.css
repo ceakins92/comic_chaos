@@ -307,6 +307,9 @@ footer hr {
   .logo-text {
     font-size: 20px;
   }
+  #article-image {
+    width: 500px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -315,5 +318,14 @@ footer hr {
   }
   .footer-title {
     font-size: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .logo-text {
+    font-size: 10px;
+  }
+  #article-image {
+    width: 300px;
   }
 }
