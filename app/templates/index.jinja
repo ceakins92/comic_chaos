@@ -3,9 +3,10 @@
 {% block content %}
 
 <div class="hero-image2">
-    <div class="hero-text"><img src="{{url_for('static', filename='/img/logo_transp_title.png')}}" width="550px">
+    <div class="hero-text"><img src="{{url_for('static', filename='/img/logo_transp_title.png')}}" width="550px"
+            class="logo-large">
 
-        <h4>community | knowledge base | market</h4><br />
+        <h4 class="logo-text">community | knowledge base | market</h4><br />
         {% if not current_user.is_authenticated %}
         <a class="btn btn-outline-danger" href="{{ url_for('auth.signin') }}" id="splash-btn" role="button">Sign
             In</a>
@@ -178,8 +179,7 @@
     <div>
         <div class="footer-image">
             <div class="footer-text">
-                <h6 style="font-size:15px;">
-                    <br>
+                <h6 class="footer-title" style="font-size:15px;">
                     <br>
                     Character Data &copy and provided by MARVEL Studios<br />
                     Other content &copy 2023 C. Eakins

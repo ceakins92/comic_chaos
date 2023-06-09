@@ -290,3 +290,32 @@ footer hr {
 .footer-text h6 {
   font-family: "Courier New", Courier, monospace;
 }
+
+@media screen and (max-width: 1200px) {
+  #side {
+    display: none;
+  }
+  #main {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .logo-large {
+    width: 300px;
+  }
+  .logo-text {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logo-text {
+    font-size: 15px;
+  }
+  .footer-title {
+    font-size: 5px;
+  }
+}
+
+@media;
