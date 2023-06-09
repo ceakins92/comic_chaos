@@ -1,10 +1,12 @@
-<nav class="navbar sticky-top navbar-expand-lg">
+<!-- Navbar for Large Screens -->
+
+<nav class="navbar sticky-top navbar-expand-lg" id="navbar1">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <a class="navbar-brand" href="{{ url_for('main.home') }}"><img src="/static/img/chaoslogo2.png" width="75"
                     height="75">
             </a>
