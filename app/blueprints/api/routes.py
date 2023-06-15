@@ -63,6 +63,7 @@ def get_marvel_character(name):
             comic_res = f'<font color="white">{char_name} Comic Collection via</font><font color="red"> MARVEL</font><font color="white">:</font><br/><a href="{comic_resource}" target="_blank">{comic_resource}</a>'
             thumbnail = f"{thumbnail}.{extension}"
         # - Return Data=============
+            package = {"Character Name": name_title, "Description (if available)": desc_title, "Comics Appeared In": comic_num, "Comic Collection via Marvel": comic_res,"thumbnail": thumbnail}
             return {"Character Name": name_title, "Description (if available)": desc_title, "Comics Appeared In": comic_num, "Comic Collection via Marvel": comic_res,"thumbnail": thumbnail}
     # - Error handling========
         except:
@@ -70,6 +71,7 @@ def get_marvel_character(name):
     # - Error handling for API Response====
     else:
         flash(f'Error {response.status_code}: {response.text}. Please try again.', 'warning')
+
 
 
 # User input and error handling ========================================

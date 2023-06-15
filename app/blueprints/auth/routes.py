@@ -1,8 +1,8 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, jsonify, render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required
 from flask import request
 from app.forms import ContactForm
-from app.models import User
+from app.models import User, Favorite
 from flask_login import current_user
 import pandas as pd
 import hashlib
@@ -13,6 +13,7 @@ import os
 from . import bp
 from app.forms import RegisterForm
 from app.forms import SigninForm
+from app import db
 
 
 # - ROUTE FOR COMIC SEARCH PAGE ===========================================
@@ -88,6 +89,8 @@ def get_contact():
 
 # GET MARVEL COMIC API ==========================================
 
+add_fave={}
+
 def get_marvel_comic(title):
     # Get public_key from environment variables =================
     public_key = os.environ.get('PUBLIC_KEY')
@@ -130,6 +133,7 @@ def get_marvel_comic(title):
             dis_link = f'<font color="white">{title_name} Comic Collection via</font><font color="red"> MARVEL</font><font color="white">:</font><br/><a href="{comic_resource}" target="_blank">{comic_resource}</a>'
             thumbnail = f"{thumbnail}"
             # Return Formatted Variables ============================
+            add_fave.update({"title": title_name, "Description": description, "First Available": on_sale, "View at Marvel": comic_resource, "thumbnail": thumbnail})
             return {"title": dis_title, "Description": dis_desc, "First Available": dis_date, "View at Marvel": dis_link, "thumbnail": thumbnail}
         # Error Handling =================================================
         except:
@@ -155,3 +159,24 @@ def title_page_post():
             return render_template('comic_search.jinja')
     else:
         return render_template('comic_search.jinja')
+    
+@bp.route('favorites', methods=['POST'])
+@login_required
+def add_favorite():
+    if request.method == 'POST':
+        user_id=current_user.user_id
+        favorite=add_fave
+        db.session.add(Favorite(user_id=user_id,api_result=favorite))
+        db.session.commit()
+        flash(f'Added to Favorites!', 'success')
+        return render_template('char_page.jinja')
+    else:
+        flash(f'Error, Please Try Again Later.', 'warning')
+
+@bp.route('/favorites')
+@login_required
+def get_favorites():
+    favorites=favorites.query.filter_by(user_id=current_user.user_id).all()
+    for f in favorites:
+        print(f.api_result)
+    return render_template('user_page.jinja', fav={'favorites':[f.api_result for f in favorites]})

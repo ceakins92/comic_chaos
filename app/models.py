@@ -56,3 +56,12 @@ class Post(db.Model):
     def commit(self):
         db.session.add(self)
         db.session.commit()
+
+class Favorite(db.Model):
+    __tablename__ = 'favorites'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    api_result = db.Column(db.JSON(250))
+
+    def __repr__(self):
+        return f'<Favorite {self.api_result}>'

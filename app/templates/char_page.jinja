@@ -52,8 +52,13 @@
                     <p>{{ data['Comics Appeared In'] }}</p>
                     <p>{{ data['Comic Collection via Marvel'] }}</p>
                     <hr>
-                    <p><button class="btn btn-outline-warning" action="">Add to
-                            Favorites</button> </p>
+                    <p>
+                    <form method="POST" action="{{ url_for('auth.add_favorite')}}">
+                        <input type="hidden" name="api_result" value="{{ api_result }}">
+                        <button type="submit" class="btn btn-outline-warning" action="">Add to
+                            Favorites</button>
+                    </form>
+                    </p>
 
                 </div>
 
